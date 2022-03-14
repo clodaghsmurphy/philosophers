@@ -6,15 +6,15 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 09:57:59 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/09 14:20:54 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/14 15:42:51 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"philo.h"
 
-void	*ft_philo(void *arg)
+void	*routine(void *arg)
 {
-	printf("Hry\n");
+	printf("Hey\n");
 }
 
 int	main(int ac, char **av)
@@ -22,6 +22,7 @@ int	main(int ac, char **av)
 	int			i;
 	int			number;
 	pthread_t	philo[ft_atoi(av[1])];
+	pthread_mutex_t	fork[ft_atoi(av[1])];
 
 	i = 0;
 	number = ft_atoi(av[1]);
