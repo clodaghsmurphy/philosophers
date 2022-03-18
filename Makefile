@@ -1,6 +1,7 @@
 SRC = src/philo.c \
 	src/utils.c \
 	src/list.c \
+	src/actions.c \
 
 LIBFT_PATH = ./Libft/
 

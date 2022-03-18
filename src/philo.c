@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 09:57:59 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/18 13:33:08 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/18 16:18:49 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,78 +15,66 @@
 void	*routine(void *arg)
 {
 	t_philo	*philo;
+	int		i;
 
+	i = 0;
 	print_time();
 	philo = (t_philo *)arg;
-	printf("philo[%d] is thinking\n", philo->philo_no);
-	take_fork(philo);
+	while (i < philo->no_of_philos)
+	{
+		thinking(philo);
+		take_fork(philo);
+		i++;
+	}
 	return (NULL);
 }
 
-void	take_fork(t_philo *philo)
+void	philo_init(char **av, t_philo *philo, int i)
 {
-	printf("first fork\n");
-	pthread_mutex_lock(philo->fork);
-	printf("aftetr ;lock\n");
-	pthread_mutex_lock(philo->next->fork);
-	printf("next\n");
-	printf("philo[%d] is eating\n", philo->philo_no);
-	sleep(3);
-	pthread_mutex_unlock(philo->fork);
-	pthread_mutex_unlock(philo->next->fork);
+	philo->status[i] = 't';
+	philo->philo_no = i;
+	philo->no_of_philos = ft_atoi(av[1]);
+	philo->time_to_eat = ft_atoi(av[3]);
+	philo->time_to_die = ft_atoi(av[2]);
+	philo->time_to_sleep = ft_atoi(av[4]);
 }
-
-// void	philo_init(char **av, t_philo *philo, int i)
-// {
-// 	printf("i is %d\n", i);
-// 	philo->philo_no = i;
-// 	philo->no_of_philos = ft_atoi(av[1]);
-// 	philo->time_to_eat = ft_atoi(av[3]);
-// 	philo->time_to_die = ft_atoi(av[2]);
-// 	philo->time_to_sleep = ft_atoi(av[4]);
-// }
 
 void	create_threads(char **av, int no_of_philos)
 {
-	t_philo	*philo;
-	t_philo	*temp;
-	t_philo	*temp2;
-	int		i;
+	t_philo			*philo;
+	pthread_t		*philo_thread;
+	pthread_mutex_t	*fork;
+	int				i;
 
-	philo = NULL;
-	temp = philo;
-	temp2 = philo;
 	i = 0;
-	while (i < no_of_philos - 1)
-	{
-		ft_lstadd_back(&philo, ft_lstnew(av, i));
-		printf("in looop and i is %d\n", i);
-		i++;
-	}
-	ft_lstadd_back_last(&philo, ft_lstnew(av, i));
-	i = 0;
-	print_list(&philo);
-	printf("hey\n");
+	philo = malloc(sizeof(t_philo));
+	philo_thread = malloc(sizeof(pthread_t) * no_of_philos);
+	if (!philo_thread)
+		return ;
+	fork = malloc(sizeof(pthread_mutex_t) * no_of_philos);
+	if (!fork)
+		return ;
+	philo->status = malloc(sizeof(char *) * no_of_philos);
+	if (!philo->status)
+		return ;
 	while (i < no_of_philos)
 	{
-		printf("philo no is %d\n", philo->no_of_philos);
-		pthread_mutex_init(temp->fork, NULL);
-		temp = temp->next;
+		pthread_mutex_init(&fork[i], NULL);
 		i++;
 	}
+	philo->fork = fork;
 	i = 0;
 	while (i < no_of_philos)
 	{
-		pthread_create(temp->philo_thread, NULL, &routine, (void *)temp);
-		temp = temp->next;
+		philo_init(av, philo, i);
+		pthread_create(&philo_thread[i], NULL, &routine, (void *)philo);
 		i++;
 	}
 	i = 0;
 	while (i < no_of_philos)
 	{
-		pthread_join(*(temp2->philo_thread), NULL);
+		pthread_join(philo_thread[i], NULL);
 		i++;
-		temp2 = temp2->next;
 	}
 }
 
@@ -110,4 +98,5 @@ int	main(int ac, char **av)
 		i++;
 	}
 	create_threads(av, ft_atoi(av[1]));
+	return (0);
 }

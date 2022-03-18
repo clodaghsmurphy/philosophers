@@ -6,13 +6,13 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 10:47:25 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/18 13:29:57 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/18 14:26:37 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-t_philo	*ft_lstnew(char **av, int i)
+/* t_philo	*ft_lstnew(char **av, int i)
 {
 	t_philo	*new_node;
 
@@ -87,3 +87,4 @@ int	ft_lstsize(t_philo *lst)
 	}
 	return (i);
 }
+ */

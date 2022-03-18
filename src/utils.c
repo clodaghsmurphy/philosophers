@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 12:36:43 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/18 12:32:37 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/18 14:26:19 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ long int	print_time(void)
 	printf("time : %ld\n", time_ms);
 	return (time_ms);
 }
-
+/* 
 void	print_list(t_philo **philo)
 {
 	int		i;
@@ -54,3 +54,4 @@ void	print_list(t_philo **philo)
 		i++;
 	}
 }
+ */
