@@ -38,24 +38,12 @@ FILES =	./ft_isalnum.c	\
 			./ft_strmapi.c \
 			./ft_strtrim.c \
 
-BONUS = ./ft_lstadd_back.c \
-		./ft_lstadd_front.c \
-		./ft_lstclear.c \
-		./ft_lstdelone.c \
-		./ft_lstiter.c \
-		./ft_lstlast.c \
-		./ft_lstmap.c \
-		./ft_lstnew.c \
-		./ft_lstsize.c \
-
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
 nb:=1
 
 OBJ = $(FILES:.c=.o)
-
-BONUS_OBJ = $(BONUS:.c=.o)
 
 .c.o: 
 	@${CC} ${CFLAGS} -g -c $< -o ${<:.c=.o}
@@ -69,9 +57,6 @@ $(NAME): $(OBJ) $(HDR)
 	@ar -crs  $(NAME) $(OBJ)
 	@echo -n "\nLibft compilation complete!"
 	@echo -n "\n"
-
-bonus: $(OBJ) $(BONUS_OBJ)
-		ar -crs $(NAME) $(OBJ) $(BONUS_OBJ)
 
 all : $(NAME)
 

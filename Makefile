@@ -1,9 +1,10 @@
 SRC = src/philo.c \
 	src/utils.c \
+	src/list.c \
 
 LIBFT_PATH = ./Libft/
 
-CFLAGS = -MMD -Wall -Wextra -Werror -g
+CFLAGS = -MMD -Wall -Wextra -Werror -g3
 CC = gcc
 
 NAME = philo
@@ -25,7 +26,7 @@ all: $(NAME)
 
 .c.o:
 	@echo -n "\33[32m"
-	@$(CC)  $(INCLUDE) -c $< -o $(<:.c=.o)
+	@$(CC)  $(INCLUDE) $(CFLAGS) -c $< -o $(<:.c=.o)
 	@echo -n "\rPHILO Objects compiled : " ${nb} 
 	$(eval nb=$(shell echo $$(($(nb)+1))))
 
@@ -33,7 +34,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@echo -n "\n"
 	@make -C Libft
-	@$(CC) $(OBJ) $(PTHREAD) $(Libft) -o $(NAME) $(INCLUDE)
+	@$(CC) $(OBJ) $(PTHREAD) $(CFLAGS) $(Libft) -o $(NAME) $(INCLUDE)
 	@echo "\nLet get philosophical!"
 
 clean:
