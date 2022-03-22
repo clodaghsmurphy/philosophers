@@ -6,68 +6,38 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 09:57:59 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/18 16:18:49 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/22 14:52:38 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"philo.h"
 
-void	*routine(void *arg)
-{
-	t_philo	*philo;
-	int		i;
-
-	i = 0;
-	print_time();
-	philo = (t_philo *)arg;
-	while (i < philo->no_of_philos)
-	{
-		thinking(philo);
-		take_fork(philo);
-		i++;
-	}
-	return (NULL);
-}
-
-void	philo_init(char **av, t_philo *philo, int i)
-{
-	philo->status[i] = 't';
-	philo->philo_no = i;
-	philo->no_of_philos = ft_atoi(av[1]);
-	philo->time_to_eat = ft_atoi(av[3]);
-	philo->time_to_die = ft_atoi(av[2]);
-	philo->time_to_sleep = ft_atoi(av[4]);
-}
-
 void	create_threads(char **av, int no_of_philos)
 {
 	t_philo			*philo;
 	pthread_t		*philo_thread;
-	pthread_mutex_t	*fork;
 	int				i;
 
 	i = 0;
-	philo = malloc(sizeof(t_philo));
 	philo_thread = malloc(sizeof(pthread_t) * no_of_philos);
 	if (!philo_thread)
 		return ;
-	fork = malloc(sizeof(pthread_mutex_t) * no_of_philos);
-	if (!fork)
+	philo = malloc(sizeof(t_philo));
+	if (!philo)
 		return ;
-	philo->status = malloc(sizeof(char *) * no_of_philos);
-	if (!philo->status)
-		return ;
+	init_threads(philo, no_of_philos);
 	while (i < no_of_philos)
 	{
-		pthread_mutex_init(&fork[i], NULL);
+		pthread_mutex_init(&philo->fork[i], NULL);
 		i++;
 	}
-	philo->fork = fork;
 	i = 0;
 	while (i < no_of_philos)
 	{
 		philo_init(av, philo, i);
+		philo->start_time = print_time();
 		pthread_create(&philo_thread[i], NULL, &routine, (void *)philo);
+		usleep(2000);
 		i++;
 	}
 	i = 0;
@@ -82,10 +52,10 @@ int	main(int ac, char **av)
 {
 	int				i;
 
-	i = 0;
+	i = 1;
 	if (ac < 5 || ac > 6)
 	{
-		ft_putstr("Wrong philo->no_of_philos of arguements! \n");
+		ft_putstr("Wrong philo->no_of_philos of arguments! \n");
 		return (0);
 	}
 	while (i < ac)

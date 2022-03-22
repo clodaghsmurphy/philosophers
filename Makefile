@@ -2,8 +2,8 @@ SRC = src/philo.c \
 	src/utils.c \
 	src/list.c \
 	src/actions.c \
-
-LIBFT_PATH = ./Libft/
+	src/init.c \
+	src/routine.c \
 
 CFLAGS = -MMD -Wall -Wextra -Werror -g3
 CC = gcc
@@ -14,10 +14,11 @@ DEP = $(SRC:.c=.d)
 
 OBJ = $(SRC:.c=.o)
 
-INCLUDE = -I ./include/ \
-		-I ./Libft/
+GREEN = \33[32m
 
-Libft = Libft/libft.a
+YELLOW = \33[33m
+
+INCLUDE = -I ./include/ \
 
 PTHREAD = -lpthread
 
@@ -34,19 +35,15 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@echo -n "\n"
-	@make -C Libft
-	@$(CC) $(OBJ) $(PTHREAD) $(CFLAGS) $(Libft) -o $(NAME) $(INCLUDE)
-	@echo "\nLet get philosophical!"
+	@$(CC) $(OBJ) $(PTHREAD) $(CFLAGS) -o $(NAME) $(INCLUDE)
+	@echo "$(GREEN)   \nLet get philosophical!"
 
 clean:
 	@rm -f $(OBJ)
 	@rm -f $(DEP)
-	@$(MAKE) -C $(LIBFT_PATH) clean
 
 fclean: clean
 	rm -f $(NAME)
-	$(MAKE) -C $(LIBFT_PATH) fclean
-
 
 -include $(DEP)
 
