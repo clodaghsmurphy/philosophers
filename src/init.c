@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:38:29 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/22 15:14:22 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/23 14:16:01 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	data_init(t_philo *philo, t_philo *d)
 	d->time_to_die = philo->time_to_die;
 	d->time_to_eat = philo->time_to_eat;
 	d->time_to_sleep = philo->time_to_sleep;
-	d->last_meal = 0;
+	d->last_meal = philo->start_time;
 	d->no_times_to_eat = philo->no_times_to_eat;
 	d->waiter = malloc(sizeof(pthread_t));
 	if (!d->waiter)
@@ -52,4 +52,5 @@ void	data_init(t_philo *philo, t_philo *d)
 	d->write = philo->write;
 	d->status = 't';
 	d->no_times_to_eat = philo->no_times_to_eat;
+	d->nb_meals = 0;
 }

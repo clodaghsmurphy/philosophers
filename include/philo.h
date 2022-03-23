@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 09:58:26 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/22 15:47:04 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/23 14:58:11 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ typedef struct s_philo
 {
 	pthread_mutex_t		*fork;
 	pthread_mutex_t		*write;
+	pthread_mutex_t		*data_lock;
+	pthread_mutex_t		*meal_time;
 	pthread_t			*waiter;
 	int					philo_no;
 	int					no_of_philos;
@@ -63,5 +65,7 @@ void		take_fork(t_philo *philo, int philo_no);
 void		init_threads(t_philo *philo, int no_of_philos);
 void		philo_init(char **av, t_philo *philo, int i);
 void		data_init(t_philo *philo, t_philo *d);
+/*--------------error---------------*/
+void		end_threads(t_philo *philo);
 
 #endif

@@ -4,6 +4,7 @@ SRC = src/philo.c \
 	src/actions.c \
 	src/init.c \
 	src/routine.c \
+	src/error.c	\
 
 CFLAGS = -MMD -Wall -Wextra -Werror -g3
 CC = gcc
