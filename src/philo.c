@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 09:57:59 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/23 17:11:58 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/24 14:22:48 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,41 +14,30 @@
 
 void	create_threads(char **av, int no_of_philos)
 {
-	t_philo			*philo;
-	pthread_t		*philo_thread;
+	t_param			*params;
 	int				i;
 
 	i = 0;
-	philo_thread = malloc(sizeof(pthread_t) * no_of_philos);
-	if (!philo_thread)
+	params = malloc(sizeof(t_param));
+	if (!params)
 		return ;
-	philo = malloc(sizeof(t_philo));
-	if (!philo)
-		return ;
-	init_threads(philo, no_of_philos);
-	while (i < no_of_philos)
-	{
-		pthread_mutex_init(&philo->fork[i], NULL);
-		i++;
-	}
+	param_init(av, params);
+	mutex_init(params);
 	i = 0;
 	while (i < no_of_philos)
 	{
-		philo_init(av, philo, i);
-		philo->start_time = print_time();
-		pthread_create(&philo_thread[i], NULL, &routine, (void *)philo);
+		philo_init(params, i);
+		if (i % 2 == 1)
+			my_usleep(5);
+		pthread_create(&params->philo_thread[i], NULL, \
+			&routine, (void *)&params->philos[i]);
 		my_usleep(200);
 		i++;
 	}
 	i = 0;
 	while (i < no_of_philos)
 	{
-		pthread_join(philo_thread[i], NULL);
-		i++;
-	}
-	while (i < no_of_philos)
-	{
-		free(&philo_thread[i]);
+		pthread_join(params->philo_thread[i], NULL);
 		i++;
 	}
 }

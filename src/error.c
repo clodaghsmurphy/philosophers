@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 14:32:01 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/23 17:25:57 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/24 11:57:26 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,30 @@ void	end_threads(t_philo *philo)
 	int	i;
 
 	i = 0;
-	printf("philo %d died after %d of meal\n", \
-	philo->philo_no, philo->nb_meals);
-	while (i < philo->no_of_philos)
+	while (i < 5)
 	{
-		pthread_mutex_destroy(&philo->fork[i]);
+		printf("philo %d died after %d of meal\n", \
+		philo->params->philos[i].philo_no, philo->params->philos[i].nb_meals);
 		i++;
 	}
-	pthread_mutex_destroy(philo->write);
-	pthread_mutex_destroy(philo->meal_time);
-	free(philo->fork);
-	free(philo->write);
+	i = 0;
+	while (i < philo->params->no_of_philos)
+	{
+		pthread_mutex_destroy(&philo->params->fork[i]);
+		//free(&philo->params->fork[i]);
+		i++;
+	}
+	pthread_mutex_destroy(philo->params->write);
+	pthread_mutex_destroy(philo->lock_meal);
+	free(philo->params->write);
 	free(philo->waiter);
-	free(philo->meal_time);
-	free(philo->data_lock);
-	free(philo);
+	free(philo->lock_meal);
+	//free(philo);
+	exit(0);
+}
+
+void	mutex_err(char	*str)
+{
+	printf("%s", str);
 	exit(0);
 }

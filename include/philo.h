@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 09:58:26 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/23 14:58:11 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/24 11:59:40 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,38 @@
 # include<sys/time.h>
 # include "philo.h"
 
+struct	s_philo;
+struct	s_param;
+
 typedef struct s_philo
 {
-	pthread_mutex_t		*fork;
-	pthread_mutex_t		*write;
-	pthread_mutex_t		*data_lock;
-	pthread_mutex_t		*meal_time;
 	pthread_t			*waiter;
+	pthread_mutex_t		*lock_meal;
+	int					left;
+	int					right;
 	int					philo_no;
+	int					nb_meals;
+	long int			start_time;
+	long int			last_meal;
+	struct s_param		*params;
+}	t_philo;
+
+typedef struct s_param
+{
 	int					no_of_philos;
 	int					time_to_eat;
 	int					time_to_die;
 	int					time_to_sleep;
+	int					total_meals;
 	int					no_times_to_eat;
-	int					nb_meals;
-	long int			start_time;
-	long int			last_meal;
-	char				status;
-}	t_philo;
+	int					all_alive;
+	t_philo				*philos;
+	pthread_t			*philo_thread;
+	pthread_mutex_t		*fork;
+	pthread_mutex_t		*write;
+	pthread_mutex_t		*data_lock;
+
+}	t_param;
 
 /*----------------utils-------------*/
 void		ft_putstr(char *str);
@@ -57,15 +71,18 @@ void		ft_lstadd_back(t_philo **alst, t_philo *new);
 int			ft_lstsize(t_philo *lst);
 void		ft_lstadd_back_last(t_philo **alst, t_philo *new);
 /*-----------actions----------*/
-void		thinking(t_philo *philo, int philo_no);
+void		eat_sleep_think(t_philo *philo, int philo_no);
 void		ft_sleep(t_philo *philo, int philo_no);
 void		prompt(t_philo *philo, int philo_no, char *str);
 void		take_fork(t_philo *philo, int philo_no);
 /*------------init----------------*/
 void		init_threads(t_philo *philo, int no_of_philos);
-void		philo_init(char **av, t_philo *philo, int i);
+void		philo_init(t_param *params, int i);
 void		data_init(t_philo *philo, t_philo *d);
+void		param_init(char **av, t_param *params);
+void		mutex_init(t_param *params);
 /*--------------error---------------*/
 void		end_threads(t_philo *philo);
+void		mutex_err(char	*str);
 
 #endif
