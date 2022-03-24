@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 14:32:01 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/24 11:57:26 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/24 14:37:58 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	end_threads(t_philo *philo)
 	i = 0;
 	while (i < 5)
 	{
-		printf("philo %d died after %d of meal\n", \
-		philo->params->philos[i].philo_no, philo->params->philos[i].nb_meals);
+		printf("philo %d died after %d meals\n", \
+		philo->params->philos[i].philo_no + 1, philo->params->philos[i].nb_meals);
 		i++;
 	}
 	i = 0;
