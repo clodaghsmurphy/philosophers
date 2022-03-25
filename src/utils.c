@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 12:36:43 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/23 13:44:54 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/25 11:37:47 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	update_meal_time(t_philo *philo)
 {
 	philo->last_meal = print_time();
 	philo->nb_meals++;
+	printf("philo no meals %d\n", philo->nb_meals);
 }
 
 void	my_usleep(int time_to)

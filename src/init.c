@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:38:29 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/24 13:45:22 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/25 10:06:02 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	param_init(char **av, t_param *params)
 	params->time_to_die = ft_atoi(av[2]);
 	params->time_to_sleep = ft_atoi(av[4]);
 	params->all_alive = 1;
-	//params->total_meals;
+	params->total_meals = 0;
 	if (av[5])
 		params->no_times_to_eat = ft_atoi(av[5]);
 	else
@@ -56,9 +56,6 @@ void	param_init(char **av, t_param *params)
 		return ;
 	params->write = malloc(sizeof(pthread_mutex_t) * params->no_of_philos);
 	if (!params->write)
-		return ;
-	params->data_lock = malloc(sizeof(pthread_mutex_t) * params->no_of_philos);
-	if (!params->data_lock)
 		return ;
 }
 

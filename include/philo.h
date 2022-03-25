@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 09:58:26 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/24 11:59:40 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/25 09:42:37 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ typedef struct s_param
 	pthread_t			*philo_thread;
 	pthread_mutex_t		*fork;
 	pthread_mutex_t		*write;
-	pthread_mutex_t		*data_lock;
 
 }	t_param;
 

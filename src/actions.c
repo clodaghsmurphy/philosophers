@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 16:06:11 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/24 15:02:42 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/25 09:39:42 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,6 @@ void	eat_sleep_think(t_philo *philo, int philo_no)
 	prompt(philo, philo_no, "has taken a fork\n");
 	pthread_mutex_lock(&philo->params->fork[philo->left]);
 	prompt(philo, philo_no, "has taken a fork\n");
-	/* printf("%ld fork[%d] and fork[%d] taken by philo[%d]\n", \
-	print_time() - philo->start_time, philo->right, \
-	philo->left, philo->philo_no); */
 	prompt(philo, philo_no, "is eating\n");
 	pthread_mutex_lock(philo->lock_meal);
 	update_meal_time(philo);
