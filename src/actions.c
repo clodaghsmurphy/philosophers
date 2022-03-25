@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 16:06:11 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/25 09:39:42 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/25 12:23:40 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	prompt(t_philo *philo, int philo_no, char *str)
 {
 	long int	time;
 
+	if (philo->philo_no == philo->params->no_of_philos - 1)
+		philo->params->total_meals = philo->nb_meals;
 	if (philo->params->all_alive == 1 && \
 	philo->params->total_meals <= philo->params->no_times_to_eat)
 	{

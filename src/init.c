@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:38:29 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/25 10:06:02 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/25 12:08:30 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,6 @@ void	mutex_init(t_param *params)
 			mutex_err("fork init error\n");
 		i++;
 	}
+	if (pthread_mutex_init(params->write, NULL))
+		mutex_err("write error\n");
 }

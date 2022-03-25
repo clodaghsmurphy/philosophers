@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:37:33 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/25 11:40:52 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/25 12:23:51 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	*monitor(void *arg)
 	philo = (t_philo *)arg;
 	while (1)
 	{
-		printf("total meals %d and philo meals %d\n",philo->params->total_meals, philo->nb_meals);
+		//printf("totalmeals : %d\n", philo->params->total_meals);
 		if ((print_time() - philo->last_meal) > philo->params->time_to_die)
 		{
 			printf("dead because time since last meal : %ld\n", \
