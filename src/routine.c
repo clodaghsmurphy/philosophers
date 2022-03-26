@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:37:33 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/25 12:23:51 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/26 17:12:54 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,28 @@ void	*routine(void *arg)
 	pthread_create(philo->waiter, NULL, &monitor, (void *)philo);
 	while (1)
 	{
+		if (still_alive(params))
+			return (NULL);
 		eat_sleep_think(philo, philo->philo_no);
 	}
 	return (NULL);
+}
+
+int	still_alive(t_param *params)
+{
+	pthread_mutex_lock(params->update_meals);
+	pthread_mutex_lock(params->end);
+	if (params->all_alive == -1 || \
+	(params->total_meals == params->no_times_to_eat \
+	&& params->no_times_to_eat != -1))
+	{
+		pthread_mutex_unlock(params->update_meals);
+		pthread_mutex_unlock(params->end);
+		return (1);
+	}
+	pthread_mutex_unlock(params->update_meals);
+	pthread_mutex_unlock(params->end);
+	return (0);
 }
 
 void	*monitor(void *arg)
@@ -39,23 +58,31 @@ void	*monitor(void *arg)
 	philo = (t_philo *)arg;
 	while (1)
 	{
-		//printf("totalmeals : %d\n", philo->params->total_meals);
+		pthread_mutex_lock(philo->params->update_meals);
 		if ((print_time() - philo->last_meal) > philo->params->time_to_die)
 		{
 			printf("dead because time since last meal : %ld\n", \
 			(print_time() - philo->last_meal));
+			prompt(philo, philo->philo_no, "Dead\n");
+			pthread_mutex_lock(philo->params->end);
 			philo->params->all_alive = -1;
-			end_threads(philo);
+			pthread_mutex_unlock(philo->params->end);
+			pthread_mutex_unlock(philo->params->update_meals);
 			return (NULL);
 		}
-		if (philo->params->total_meals >= philo->params->no_times_to_eat)
+		if (philo->params->total_meals >= \
+		philo->params->no_times_to_eat && philo->params->no_times_to_eat != -1)
 		{
 			printf("dead because ate all the meals necessary : %d\n", \
 			philo->params->total_meals);
+			prompt(philo, philo->philo_no, "Finished eating\n");
+			pthread_mutex_lock(philo->params->end);
 			philo->params->all_alive = -1;
-			end_threads(philo);
+			pthread_mutex_unlock(philo->params->update_meals);
 			return (NULL);
 		}
+		pthread_mutex_unlock(philo->params->update_meals);
+		pthread_mutex_unlock(philo->params->end);
 	}
 	return (NULL);
 }

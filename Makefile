@@ -7,6 +7,7 @@ SRC = src/philo.c \
 	src/error.c	\
 
 CFLAGS = -MMD -Wall -Wextra -Werror -g3
+FSAN = -fsanitize=thread
 CC = gcc
 
 NAME = philo
@@ -29,14 +30,14 @@ all: $(NAME)
 
 .c.o:
 	@echo -n "\33[32m"
-	@$(CC)  $(INCLUDE) $(CFLAGS) -c $< -o $(<:.c=.o)
+	@$(CC)  $(INCLUDE) $(CFLAGS)  -c $< -o $(<:.c=.o)
 	@echo -n "\rPHILO Objects compiled : " ${nb} 
 	$(eval nb=$(shell echo $$(($(nb)+1))))
 
 
 $(NAME): $(OBJ)
 	@echo -n "\n"
-	@$(CC) $(OBJ) $(PTHREAD) $(CFLAGS) -o $(NAME) $(INCLUDE)
+	@$(CC) $(OBJ) $(PTHREAD) $(CFLAGS)  -o $(NAME) $(INCLUDE)
 	@echo "$(GREEN)   \nLet get philosophical!"
 
 clean:

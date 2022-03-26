@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 09:58:26 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/25 09:42:37 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/26 16:32:19 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ typedef struct s_param
 	t_philo				*philos;
 	pthread_t			*philo_thread;
 	pthread_mutex_t		*fork;
+	pthread_mutex_t		*end;
+	pthread_mutex_t		*update_meals;
 	pthread_mutex_t		*write;
 
 }	t_param;
@@ -63,6 +65,7 @@ void		update_meal_time(t_philo *philo);
 void		*routine(void *arg);
 void		create_threads(char **av, int no_of_philos);
 void		*monitor(void *arg);
+int			still_alive(t_param *params);
 /*-----------list-------------*/
 void		ft_lstclear(t_philo **lst);
 t_philo		*ft_lstnew(char **av, int i);
@@ -81,7 +84,7 @@ void		data_init(t_philo *philo, t_philo *d);
 void		param_init(char **av, t_param *params);
 void		mutex_init(t_param *params);
 /*--------------error---------------*/
-void		end_threads(t_philo *philo);
+void		end_threads(t_param *params);
 void		mutex_err(char	*str);
 
 #endif

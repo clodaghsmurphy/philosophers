@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:38:29 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/25 12:08:30 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/26 15:59:23 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,12 @@ void	param_init(char **av, t_param *params)
 	params->write = malloc(sizeof(pthread_mutex_t) * params->no_of_philos);
 	if (!params->write)
 		return ;
+	params->update_meals = malloc(sizeof(pthread_mutex_t) * params->no_of_philos);
+	if (!params->update_meals)
+		return ;
+	params->end = malloc(sizeof(pthread_mutex_t) * params->no_of_philos);
+	if (!params->end)
+		return ;
 }
 
 void	mutex_init(t_param *params)
@@ -71,5 +77,9 @@ void	mutex_init(t_param *params)
 		i++;
 	}
 	if (pthread_mutex_init(params->write, NULL))
+		mutex_err("write error\n");
+	if (pthread_mutex_init(params->end, NULL))
+		mutex_err("write error\n");
+	if (pthread_mutex_init(params->update_meals, NULL))
 		mutex_err("write error\n");
 }

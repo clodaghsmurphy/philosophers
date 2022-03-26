@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 16:06:11 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/25 12:23:40 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/26 17:12:20 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,19 @@ void	prompt(t_philo *philo, int philo_no, char *str)
 {
 	long int	time;
 
-	if (philo->philo_no == philo->params->no_of_philos - 1)
-		philo->params->total_meals = philo->nb_meals;
-	if (philo->params->all_alive == 1 && \
-	philo->params->total_meals <= philo->params->no_times_to_eat)
+	pthread_mutex_lock(philo->params->write);
+	pthread_mutex_lock(philo->params->end);
+	if (philo->params->all_alive != -1)
 	{
-		pthread_mutex_lock(philo->params->write);
+		pthread_mutex_unlock(philo->params->end);
 		time = print_time() - philo->start_time;
 		printf("%ld %d %s", time, philo_no + 1, str);
-		pthread_mutex_unlock(philo->params->write);
+		if (str[0] != 'D')
+			pthread_mutex_unlock(philo->params->write);
+		if (str[0] != 'F')
+			pthread_mutex_unlock(philo->params->write);
 	}
+	pthread_mutex_unlock(philo->params->end);
 }
 
 void	eat_sleep_think(t_philo *philo, int philo_no)
@@ -44,4 +47,16 @@ void	eat_sleep_think(t_philo *philo, int philo_no)
 	prompt(philo, philo_no, "is sleeping\n");
 	my_usleep(philo->params->time_to_sleep);
 	prompt(philo, philo_no, "is thinking\n");
+}
+
+void	update_meal_time(t_philo *philo)
+{
+	pthread_mutex_lock(philo->params->update_meals);
+	philo->last_meal = print_time();
+	philo->nb_meals++;
+	if (philo->nb_meals == philo->params->no_of_philos)
+		philo->params->total_meals++;
+	printf("philo no meals %d\n", philo->nb_meals);
+	pthread_mutex_unlock(philo->params->update_meals);
+	usleep(100);
 }
