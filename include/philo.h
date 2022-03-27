@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 09:58:26 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/26 16:32:19 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/27 18:17:43 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ void		*routine(void *arg);
 void		create_threads(char **av, int no_of_philos);
 void		*monitor(void *arg);
 int			still_alive(t_param *params);
+int			check_philos(t_philo *philo);
+int			check_meals(t_philo *philo, int total_meals, int ntte);
 /*-----------list-------------*/
 void		ft_lstclear(t_philo **lst);
 t_philo		*ft_lstnew(char **av, int i);
