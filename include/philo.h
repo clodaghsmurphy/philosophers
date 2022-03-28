@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 09:58:26 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/27 18:17:43 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/28 14:51:02 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ struct	s_param;
 typedef struct s_philo
 {
 	pthread_t			*waiter;
-	pthread_mutex_t		*lock_meal;
+	pthread_mutex_t		*lock_meal_time;
 	int					left;
 	int					right;
 	int					philo_no;
@@ -55,38 +55,38 @@ typedef struct s_param
 }	t_param;
 
 /*----------------utils-------------*/
-void		ft_putstr(char *str);
-long int	print_time(void);
-void		print_list(t_philo **philo);
-void		my_usleep(int time_to);
 int			ft_atoi(const char *str);
-void		update_meal_time(t_philo *philo);
 /*-----------------philo---------*/
-void		*routine(void *arg);
 void		create_threads(char **av, int no_of_philos);
-void		*monitor(void *arg);
-int			still_alive(t_param *params);
-int			check_philos(t_philo *philo);
+void		join_threads(t_param *params);
 int			check_meals(t_philo *philo, int total_meals, int ntte);
-/*-----------list-------------*/
-void		ft_lstclear(t_philo **lst);
-t_philo		*ft_lstnew(char **av, int i);
-void		ft_lstadd_back(t_philo **alst, t_philo *new);
-int			ft_lstsize(t_philo *lst);
-void		ft_lstadd_back_last(t_philo **alst, t_philo *new);
+/*---------rotuine-----------*/
+void		*routine(void *arg);
+int			still_alive(t_param *params);
+/*----------monitor----------*/
+void		*monitor(void *arg);
+int			check_philos(t_philo *philo);
 /*-----------actions----------*/
-void		eat_sleep_think(t_philo *philo, int philo_no);
-void		ft_sleep(t_philo *philo, int philo_no);
+void		dine(t_philo *philo);
 void		prompt(t_philo *philo, int philo_no, char *str);
-void		take_fork(t_philo *philo, int philo_no);
+void		take_forks(t_philo	*philo);
+void		is_eating(t_philo *philo);
+void		sleeping_and_thinking(t_philo *philo);
 /*------------init----------------*/
 void		init_threads(t_philo *philo, int no_of_philos);
 void		philo_init(t_param *params, int i);
 void		data_init(t_philo *philo, t_philo *d);
 void		param_init(char **av, t_param *params);
 void		mutex_init(t_param *params);
+void		param_mutex_init(t_param *param);
+void		init_forks(t_param *params, int i);
+
 /*--------------error---------------*/
 void		end_threads(t_param *params);
 void		mutex_err(char	*str);
+/*--------------time------------*/
+void		update_meal_time(t_philo *philo);
+void		my_usleep(int time_to);
+long int	print_time(void);
 
 #endif

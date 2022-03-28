@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:38:29 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/26 15:59:23 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/28 14:50:55 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,32 @@ void	philo_init(t_param *params, int i)
 	params->philos[i].start_time = print_time();
 	params->philos[i].last_meal = print_time();
 	params->philos[i].params = params;
-	params->philos[i].right = params->philos[i].philo_no;
-	params->philos[i].left = (params->philos[i].philo_no + 1) \
-	% params->no_of_philos;
+	init_forks(params, i);
 	params->philos[i].waiter = malloc(sizeof(pthread_t) * params->no_of_philos);
 	if (!params->philos[i].waiter)
 		return ;
-	params->philos[i].lock_meal = malloc(sizeof(pthread_mutex_t) \
+	params->philos[i].lock_meal_time = malloc(sizeof(pthread_mutex_t) \
 	* params->no_of_philos);
-	if (!params->philos[i].lock_meal)
+	if (!params->philos[i].lock_meal_time)
 		return ;
-	if (pthread_mutex_init(params->philos[i].lock_meal, NULL))
+	if (pthread_mutex_init(params->philos[i].lock_meal_time, NULL))
 		mutex_err("lock meal init error\n");
+}
+
+void	init_forks(t_param *params, int i)
+{
+	if (i % params->no_of_philos == 0)
+	{
+		params->philos[i].left = params->philos[i].philo_no;
+		params->philos[i].right = (params->philos[i].philo_no + 1) \
+	% params->no_of_philos;
+	}
+	else
+	{
+		params->philos[i].right = params->philos[i].philo_no;
+	params->philos[i].left = (params->philos[i].philo_no + 1) \
+	% params->no_of_philos;
+	}
 }
 
 void	param_init(char **av, t_param *params)
@@ -45,6 +59,11 @@ void	param_init(char **av, t_param *params)
 		params->no_times_to_eat = ft_atoi(av[5]);
 	else
 		params->no_times_to_eat = -1;
+	param_mutex_init(params);
+}
+
+void	param_mutex_init(t_param *params)
+{
 	params->philos = malloc(sizeof(t_philo) * params->no_of_philos);
 	if (!params->philos)
 		return ;
@@ -54,13 +73,13 @@ void	param_init(char **av, t_param *params)
 	params->fork = malloc(sizeof(pthread_mutex_t) * params->no_of_philos);
 	if (!params->fork)
 		return ;
-	params->write = malloc(sizeof(pthread_mutex_t) * params->no_of_philos);
+	params->write = malloc(sizeof(pthread_mutex_t));
 	if (!params->write)
 		return ;
-	params->update_meals = malloc(sizeof(pthread_mutex_t) * params->no_of_philos);
+	params->update_meals = malloc(sizeof(pthread_mutex_t));
 	if (!params->update_meals)
 		return ;
-	params->end = malloc(sizeof(pthread_mutex_t) * params->no_of_philos);
+	params->end = malloc(sizeof(pthread_mutex_t));
 	if (!params->end)
 		return ;
 }

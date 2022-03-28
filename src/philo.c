@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 09:57:59 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/27 20:29:19 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/28 16:04:08 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,31 @@ void	create_threads(char **av, int no_of_philos)
 	mutex_init(params);
 	i = 0;
 	while (i < no_of_philos)
-	{
-		if (i % 2 == 1)
-			my_usleep(200);
+	{	
 		philo_init(params, i);
+		if (i % no_of_philos == 1)
+			my_usleep(10);
 		pthread_create(&params->philo_thread[i], NULL, \
 			&routine, (void *)&params->philos[i]);
 		i++;
 	}
+	join_threads(params);
+	end_threads(params);
+}
+
+void	join_threads(t_param *params)
+{
+	int	i;
+
 	i = 0;
-	while (i < no_of_philos)
+	while (i < params->no_of_philos)
 	{
-		pthread_join(params->philo_thread[i], NULL);
-		pthread_join(*(params->philos[i].waiter), NULL);
+		if (pthread_join(params->philo_thread[i], NULL) != 0)
+			mutex_err("Error : unable to join philo thread\n");
+		if (pthread_join(*(params->philos[i].waiter), NULL) != 0)
+			mutex_err("Error : unable to join waiter thread\n");
 		i++;
 	}
-	end_threads(params);
 }
 
 int	main(int ac, char **av)
@@ -50,14 +59,14 @@ int	main(int ac, char **av)
 	i = 1;
 	if (ac < 5 || ac > 6)
 	{
-		ft_putstr("Wrong philo->no_of_philos of arguments! \n");
+		printf("Wrong philo->no_of_philos of arguments! \n");
 		return (0);
 	}
 	while (i < ac)
 	{
 		if (ft_atoi(av[i]) < 0)
 		{
-			ft_putstr("Positive philo->no_of_philoss only\n");
+			printf("Positive philo->no_of_philoss only\n");
 			return (0);
 		}
 		i++;
