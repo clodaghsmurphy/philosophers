@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 09:57:59 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/29 18:44:44 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/29 18:59:55 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	create_threads(char **av, int no_of_philos)
 		i++;
 	}
 	join_threads(params);
-	end_threads(params);
+	if (params->all_alive == -1)
+		end_threads(params);
 }
 
 void	join_threads(t_param *params)
