@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 09:11:01 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/28 17:53:26 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/29 11:30:56 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,15 @@ int	check_philos(t_philo *philo)
 	philo->params->no_times_to_eat) == -1)
 		return (-1);
 	pthread_mutex_unlock(philo->params->update_meals);
-	my_usleep(10);
+	
 	return (1);
 }
 
 int	check_meals(t_philo *philo, int total_meals, int ntte)
 {
-	if (total_meals >= ntte && ntte != -1)
+	if (total_meals >= philo->params->no_of_philos && ntte != -1)
 	{
+		//total_meals == nb of philos
 		prompt(philo, philo->philo_no, \
 		"All philos have eaten required meals\n");
 		pthread_mutex_lock(philo->params->end);

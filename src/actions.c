@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 16:06:11 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/28 13:59:41 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/29 11:29:19 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,10 @@ void	dine(t_philo *philo)
 
 void	take_forks(t_philo	*philo)
 {
+	// printf("PHILO %d TRIES TO TAKE FORK = %d\n", philo->philo_no, philo->right);
 	pthread_mutex_lock(&philo->params->fork[philo->right]);
 	prompt(philo, philo->philo_no, "has taken a fork\n");
+	// printf("PHILO %d TRIES TO TAKE FORK = %d\n", philo->philo_no, philo->left);
 	pthread_mutex_lock(&philo->params->fork[philo->left]);
 	prompt(philo, philo->philo_no, "has taken a fork\n");
 }
