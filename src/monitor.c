@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 09:11:01 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/28 17:53:26 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/29 18:45:45 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,28 +18,27 @@ int	check_philos(t_philo *philo)
 
 	pthread_mutex_lock(philo->lock_meal_time);
 	last_meal = print_time() - philo->last_meal;
+	pthread_mutex_unlock(philo->lock_meal_time);
 	if (last_meal >= philo->params->time_to_die)
 	{
 		prompt(philo, philo->philo_no, "Philosopher died\n");
-		pthread_mutex_unlock(philo->lock_meal_time);
+		//printf("PHILO %d last meal was %ld secs ago\n", philo->philo_no + 1, last_meal);
 		pthread_mutex_lock(philo->params->end);
 		philo->params->all_alive = -1;
 		pthread_mutex_unlock(philo->params->end);
 		return (-1);
 	}
-	pthread_mutex_unlock(philo->lock_meal_time);
 	pthread_mutex_lock(philo->params->update_meals);
 	if (check_meals(philo, philo->params->total_meals, \
 	philo->params->no_times_to_eat) == -1)
 		return (-1);
 	pthread_mutex_unlock(philo->params->update_meals);
-	my_usleep(10);
 	return (1);
 }
 
 int	check_meals(t_philo *philo, int total_meals, int ntte)
 {
-	if (total_meals >= ntte && ntte != -1)
+	if (total_meals == philo->params->no_of_philos && ntte != -1)
 	{
 		prompt(philo, philo->philo_no, \
 		"All philos have eaten required meals\n");

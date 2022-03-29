@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 09:57:59 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/28 16:04:08 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/29 18:44:44 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,12 @@ void	create_threads(char **av, int no_of_philos)
 	while (i < no_of_philos)
 	{	
 		philo_init(params, i);
-		if (i % no_of_philos == 1)
-			my_usleep(10);
+	 	if (i % 2 == 0)
+		{
+			my_usleep(params->time_to_eat * 0.9);
+		}
 		pthread_create(&params->philo_thread[i], NULL, \
-			&routine, (void *)&params->philos[i]);
+			&routine, (void *)&params->philos[i]);		
 		i++;
 	}
 	join_threads(params);
