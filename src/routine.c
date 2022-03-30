@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:37:33 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/28 10:15:39 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/30 16:12:30 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	*routine(void *arg)
 			return (NULL);
 		dine(philo);
 	}
+	
 	return (NULL);
 }
 
@@ -39,7 +40,7 @@ int	still_alive(t_param *params)
 	pthread_mutex_lock(params->update_meals);
 	pthread_mutex_lock(params->end);
 	if (params->all_alive == -1 || \
-	(params->total_meals >= params->no_times_to_eat \
+	(params->total_meals >= params->no_of_philos \
 	&& params->no_times_to_eat != -1))
 	{
 		pthread_mutex_unlock(params->update_meals);
