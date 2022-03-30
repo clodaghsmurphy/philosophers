@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:38:29 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/30 10:36:14 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/30 17:25:07 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	philo_init(t_param *params, int i)
 {
 	params->philos[i].philo_no = i;
 	params->philos[i].nb_meals = 0;
-	params->philos[i].start_time = print_time();
 	params->philos[i].last_meal = print_time();
 	params->philos[i].params = params;
 	init_forks(params, i);
@@ -54,6 +53,7 @@ void	param_init(char **av, t_param *params)
 	params->time_to_eat = ft_atoi(av[3]);
 	params->time_to_die = ft_atoi(av[2]);
 	params->time_to_sleep = ft_atoi(av[4]);
+	params->start_time = 0;
 	params->all_alive = 1;
 	params->total_meals = 0;
 	if (av[5])

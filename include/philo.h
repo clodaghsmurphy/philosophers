@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 09:58:26 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/28 14:51:02 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/30 17:16:44 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ typedef struct s_philo
 	int					right;
 	int					philo_no;
 	int					nb_meals;
-	long int			start_time;
 	long int			last_meal;
 	struct s_param		*params;
 }	t_philo;
@@ -39,6 +38,7 @@ typedef struct s_philo
 typedef struct s_param
 {
 	int					no_of_philos;
+	long int			start_time;
 	int					time_to_eat;
 	int					time_to_die;
 	int					time_to_sleep;

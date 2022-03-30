@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:37:33 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/30 16:12:30 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/30 18:03:36 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ void	*routine(void *arg)
 	params = philo->params;
 	if (params->no_of_philos == 1)
 	{
-		printf("%ld 1 has taken a fork", print_time() - philo->start_time);
+		printf("%ld 1 has taken a fork", print_time() - philo->params->start_time);
+		pthread_mutex_lock(philo->params->end);
+		philo->params->all_alive = 1;
+		pthread_mutex_unlock(philo->params->end);
 		return (NULL);
 	}
 	pthread_create(philo->waiter, NULL, &monitor, (void *)philo);
