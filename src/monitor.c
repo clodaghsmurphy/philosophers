@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 09:11:01 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/31 21:14:36 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/31 21:41:08 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ int	check_philos(t_philo *philo)
 	long int	last_meal;
 	
 	pthread_mutex_lock(philo->lock_meal_time);
-	last_meal = print_time() - philo->last_meal;
+	last_meal =  philo->last_meal;
 	pthread_mutex_unlock(philo->lock_meal_time);
-	if (last_meal >= philo->params->time_to_die)
+	if ((print_time() - last_meal) > philo->params->time_to_die)
 	{
-		prompt(philo, philo->philo_no, "Philosopher died\n");
+		prompt(philo, philo->philo_no, "died\n");
 		pthread_mutex_lock(philo->params->end);
 		philo->params->all_alive = -1;
 		pthread_mutex_unlock(philo->params->end);
@@ -31,7 +31,7 @@ int	check_philos(t_philo *philo)
 	if (check_meals(philo, philo->params->total_meals, \
 	philo->params->no_times_to_eat) == -1)
 		return (-1);
-	my_usleep(10);
+	my_usleep(5);
 	return (1);
 }
 

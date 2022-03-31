@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:38:29 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/30 17:25:07 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/31 21:52:06 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	philo_init(t_param *params, int i)
 
 void	init_forks(t_param *params, int i)
 {
- 	if (i % params->no_of_philos == 0)
+ 	if (i % 2 == 0)
 	{
 		params->philos[i].left = params->philos[i].philo_no;
 		params->philos[i].right = (params->philos[i].philo_no + 1) \
