@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 09:07:24 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/30 15:27:20 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/31 18:53:25 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	my_usleep(int time_to)
 	tmp = print_time();
 	sleep_time = (long int)time_to;
 	while ((print_time() - tmp) < sleep_time)
-		usleep(sleep_time);
+		usleep(sleep_time / 10);
 }
 
 long int	print_time(void)

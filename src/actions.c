@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 16:06:11 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/30 17:48:12 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/31 21:02:35 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,23 @@
 
 void	prompt(t_philo *philo, int philo_no, char *str)
 {
-	//long int	time;
-
 	pthread_mutex_lock(philo->params->end);
 	if (philo->params->all_alive != -1)
 	{
 		pthread_mutex_lock(philo->params->write);
-	
-			//time = print_time() - philo->start_time;
+		if (philo->params->all_alive != -1)
+		{
+			pthread_mutex_unlock(philo->params->end);
 			printf("%ld %d %s", print_time() - philo->params->start_time, philo_no + 1, str);
-		pthread_mutex_unlock(philo->params->write);
-
+			pthread_mutex_unlock(philo->params->write);
+		}
+		else
+			pthread_mutex_unlock(philo->params->write);
 	}
-	
-	pthread_mutex_unlock(philo->params->end);
-
+	else
+	{
+		pthread_mutex_unlock(philo->params->end);
+	}
 }
 
 void	dine(t_philo *philo)

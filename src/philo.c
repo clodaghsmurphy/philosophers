@@ -6,7 +6,7 @@
 /*   By: clmurphy <clmurphy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 09:57:59 by clmurphy          #+#    #+#             */
-/*   Updated: 2022/03/30 18:06:20 by clmurphy         ###   ########.fr       */
+/*   Updated: 2022/03/31 19:16:58 by clmurphy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,16 @@ void	create_threads(char **av, int no_of_philos)
 	i = 0;
 	while (i < no_of_philos)
 	{	
- 	  	if (i % 2 == 0)
-			my_usleep(params->no_times_to_eat *0.9);
+ 	  	if (i % 2 == 1)
+			my_usleep(params->no_times_to_eat * 0.9);
 		philo_init(params, i);
 		if (!params->start_time)
 			params->start_time = print_time();	
 		pthread_create(&params->philo_thread[i], NULL, \
-			&routine, (void *)&params->philos[i]);	
+			&routine, (void *)&params->philos[i]);
 		i++;
 	}
-	if (params->all_alive == -1)
-		join_threads(params);
-	else
-		while (i < params->no_of_philos)
-	{
-		if (pthread_join(params->philo_thread[i], NULL) != 0)
-			mutex_err("Error : unable to join philo thread\n");
-		i++;
-	}
+	join_threads(params);
 	end_threads(params);
 }
 
