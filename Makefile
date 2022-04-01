@@ -8,7 +8,7 @@ SRC = src/philo.c \
 	src/monitor.c \
 	src/time.c \
 
-CFLAGS = -MMD -Wall -Wextra -Werror -g3
+CFLAGS = -Wall -Wextra -Werror -g3
 FSAN = -fsanitize=thread
 CC = gcc
 
